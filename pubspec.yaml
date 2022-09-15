@@ -38,6 +38,7 @@ dependencies:
   ionicons: ^0.1.2
   google_fonts: ^3.0.1
   intl: ^0.17.0
+  keyboard_dismisser: ^2.0.1
 
 dev_dependencies:
   flutter_test:

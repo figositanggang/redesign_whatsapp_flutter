@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatsapp_ui/provider/chat_provider.dart';
+import 'package:whatsapp_ui/screen/chat_screen.dart';
 
 class ChatTabView extends StatefulWidget {
   const ChatTabView({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class _ChatTabViewState extends State<ChatTabView> {
               user_chat_preview: chat["user_chat_preview"],
               user_date: chat["user_date"],
               user_chat: chat["user_chat"],
+              chat_id: chat["chat_id"],
             );
           },
         ),
@@ -36,6 +38,7 @@ class _ChatTabViewState extends State<ChatTabView> {
 }
 
 class _Chat extends StatelessWidget {
+  final int chat_id;
   final String user_profile_url;
   final String user_name;
   final String user_chat_preview;
@@ -49,6 +52,7 @@ class _Chat extends StatelessWidget {
     required this.user_chat_preview,
     required this.user_date,
     required this.user_chat,
+    required this.chat_id,
   }) : super(key: key);
 
   @override
@@ -89,7 +93,21 @@ class _Chat extends StatelessWidget {
               style: TextStyle(color: Colors.white.withOpacity(.75)),
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                  user_profile_url: user_profile_url,
+                  user_name: user_name,
+                  user_chat_preview: user_chat_preview,
+                  user_date: user_date,
+                  user_chat: user_chat,
+                  chat_id: chat_id,
+                ),
+              ),
+            );
+          },
           hoverColor: Colors.white.withOpacity(.1),
           focusColor: Colors.white.withOpacity(.1),
           highlightColor: Colors.white.withOpacity(.1),

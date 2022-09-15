@@ -5,6 +5,7 @@ import 'package:whatsapp_ui/provider/tab_bar_provider.dart';
 import 'package:whatsapp_ui/tabView/chat_tabView.dart';
 import 'package:whatsapp_ui/theme.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 void main() {
   runApp(
@@ -12,6 +13,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => TabBarProvider()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
+        ChangeNotifierProvider(create: (_) => ChatFormProvider()),
       ],
       child: const MyApp(),
     ),
@@ -23,10 +25,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-      themeMode: ThemeMode.dark,
-      darkTheme: darkTheme,
+    return KeyboardDismisser(
+      gestures: [
+        GestureType.onTap,
+        GestureType.onPanUpdateDownDirection,
+        GestureType.onTapDown,
+        GestureType.onTapCancel,
+        GestureType.onTapUp,
+      ],
+      child: MaterialApp(
+        home: NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (overscroll) {
+              overscroll.disallowIndicator();
+              return true;
+            },
+            child: HomePage()),
+        themeMode: ThemeMode.dark,
+        darkTheme: darkTheme,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
@@ -51,23 +68,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar("WhatsApp"),
-      body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowIndicator();
-          return true;
-        },
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            ChatTabView(),
-            Center(
-              child: Icon(Icons.abc),
-            ),
-            Center(
-              child: Icon(Icons.abc),
-            ),
-          ],
-        ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          ChatTabView(),
+          Center(
+            child: Icon(Icons.abc),
+          ),
+          Center(
+            child: Icon(Icons.abc),
+          ),
+        ],
       ),
     );
   }
@@ -80,7 +91,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         title!,
         style: TextStyle(fontSize: 25, color: Colors.white.withOpacity(.75)),
       ),
-      backgroundColor: Color.fromARGB(255, 15, 25, 35),
+      backgroundColor: appBarColor,
       elevation: 0,
       toolbarHeight: 70,
       actions: [
