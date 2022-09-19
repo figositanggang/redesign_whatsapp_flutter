@@ -18,6 +18,7 @@ final MaterialColor _primarySwatch = MaterialColor(
 );
 
 final ThemeData darkTheme = ThemeData(
+  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: scaffoldColor),
   primarySwatch: _primarySwatch,
   scaffoldBackgroundColor: Color.fromARGB(255, 10, 16, 23),
   splashColor: Colors.transparent,

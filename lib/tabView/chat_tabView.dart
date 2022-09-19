@@ -113,7 +113,7 @@ class _Chat extends StatelessWidget {
           highlightColor: Colors.white.withOpacity(.1),
         ),
         Divider(
-          color: Colors.white.withOpacity(.25),
+          color: Colors.white.withOpacity(.1),
           height: 0,
         ),
       ],

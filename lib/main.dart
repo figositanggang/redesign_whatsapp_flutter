@@ -14,6 +14,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => TabBarProvider()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => ChatFormProvider()),
+        ChangeNotifierProvider(create: (_) => ChatBottomSheetProvider()),
       ],
       child: const MyApp(),
     ),
@@ -34,12 +35,7 @@ class MyApp extends StatelessWidget {
         GestureType.onTapUp,
       ],
       child: MaterialApp(
-        home: NotificationListener<OverscrollIndicatorNotification>(
-            onNotification: (overscroll) {
-              overscroll.disallowIndicator();
-              return true;
-            },
-            child: HomePage()),
+        home: HomePage(),
         themeMode: ThemeMode.dark,
         darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,
