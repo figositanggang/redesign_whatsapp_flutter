@@ -165,10 +165,6 @@ class Chats {
 class ChatProvider extends ChangeNotifier {
   List<Map> _chats = Chats().chats;
   List<Map> get getChats => _chats;
-  // set addChat(List val) {
-  //   _chats[val[0]]["user_chat"].add(val[1]);
-  //   notifyListeners();
-  // }
   addChat(chat, id) {
     _chats[id]["user_chat"].add(chat);
     notifyListeners();

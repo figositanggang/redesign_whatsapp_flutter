@@ -55,21 +55,22 @@ class _ChatFormState extends State<ChatForm> {
 
   // Send Message Button
   Widget _sendMessage(BuildContext context) {
-    final _chatFormProv = Provider.of<ChatFormProvider>(context);
-    final _chatProv = Provider.of<ChatProvider>(context);
-    final _chatBottomSheetProv = Provider.of<ChatBottomSheetProvider>(context);
+    final chatFormProv = Provider.of<ChatFormProvider>(context);
+    final chatProv = Provider.of<ChatProvider>(context);
+    final chatBottomSheetProv = Provider.of<ChatBottomSheetProvider>(context);
 
     addChat() {
-      if (_chatFormProv.getController.text.toString() != "") {
-        _chatProv.addChat(
+      if (chatFormProv.getController.text.toString() != "") {
+        chatProv.addChat(
           {
             "time": DateTime.now(),
-            "user": _chatBottomSheetProv.getValue.toString(),
-            "chat": _chatFormProv.getController.text.toString(),
+            "user": chatBottomSheetProv.getValue.toString(),
+            "chat": chatFormProv.getController.text.toString(),
           },
           widget.chat_id,
         );
-        _chatFormProv.setController = "";
+        chatFormProv.setController = "";
+        chatProv.setScrollController = chatProv.scrollPos + 10;
       }
     }
 
@@ -111,7 +112,7 @@ class ChatDisplay extends StatelessWidget {
           return true;
         },
         child: ListView(
-          controller: chatProv.getScrollController,
+          controller: ScrollController(initialScrollOffset: chatProv.scrollPos),
           children: List.generate(
             _lengthChat,
             (index) {
